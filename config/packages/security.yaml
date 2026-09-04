@@ -1,0 +1,37 @@
+security:
+  password_hashers:
+    Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+    common: 'auto'
+
+  providers:
+    app_user_provider:
+      entity:
+        class: App\User\Infrastructure\Security\User
+        property: email
+
+  firewalls:
+    dev:
+      pattern: ^/(_(profiler|wdt)|css|images|js|assets)/
+      security: false
+    api:
+      pattern: ^/api
+      stateless: true
+      provider: app_user_provider
+      jwt: ~
+
+  access_control:
+    - { path: ^/api/login, roles: PUBLIC_ACCESS }
+    - { path: ^/api/store$, roles: PUBLIC_ACCESS, methods: [ GET ] }
+    - { path: ^/api, roles: ROLE_USER }
+
+when@test:
+  security:
+    password_hashers:
+      Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface:
+        algorithm: auto
+        cost: 4
+        time_cost: 3
+        memory_cost: 10
+      common:
+        algorithm: auto
+        cost: 4

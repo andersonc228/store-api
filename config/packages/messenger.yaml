@@ -1,0 +1,39 @@
+# config/packages/messenger.yaml
+framework:
+  messenger:
+    default_bus: command.bus
+    buses:
+      command.bus:
+        default_middleware: true
+        middleware:
+          - doctrine_ping_connection
+          - doctrine_close_connection
+          - doctrine_transaction
+      query.bus:
+        default_middleware: true
+        middleware:
+          - doctrine_ping_connection
+          - doctrine_close_connection
+      event.bus:
+        default_middleware:
+          enabled: true
+          allow_no_handlers: true
+
+    transports:
+      async:
+        dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+        options:
+          lazy: true
+          stream: messages
+          auto_setup: true
+
+    routing:
+      'App\Shared\Application\Bus\AsAsync': async
+      'App\Shared\Domain\Event': async
+
+
+when@test:
+  framework:
+    messenger:
+      transports:
+        async: 'in-memory://'

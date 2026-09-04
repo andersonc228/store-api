@@ -1,0 +1,43 @@
+name: store-api
+
+services:
+  store_api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: store_api_app
+    volumes:
+      - ./:/var/www/app
+    working_dir: /var/www/app
+    user: "502:20"
+    ports:
+      - "8080:80"
+    environment:
+      - DATABASE_URL=mysql://store_user:store_secret_pass@store_database:3306/store_db?serverVersion=8.0.32&charset=utf8mb4
+      - SERVER_NAME=:80
+    depends_on:
+      - store_database
+      - pp-redis
+
+  store_database:
+    image: mysql:8.0
+    container_name: store_api_mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=store_root_secret_pass
+      - MYSQL_DATABASE=store_db
+      - MYSQL_USER=store_user
+      - MYSQL_PASSWORD=store_secret_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - store_mysql_data:/var/lib/mysql
+
+  pp-redis:
+    container_name: pp-redis
+    image: redis:alpine
+    ports:
+      - "3002:6379"
+
+volumes:
+  store_mysql_data:
+    driver: local

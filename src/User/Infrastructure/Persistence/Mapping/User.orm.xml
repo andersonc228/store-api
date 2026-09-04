@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+      xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance">
+    <entity
+            table="users"
+            name="App\User\Domain\Model\User"
+            repository-class="App\User\Infrastructure\Persistence\OrmUserRepository"
+    >
+        <id name="id" type="string" length="26"/>
+        <field name="email" type="string" length="255" nullable="false"/>
+        <field name="password" type="string" length="255" nullable="false"/>
+        <field name="createdAt" column="created_at" type="datetime_immutable" nullable="false"/>
+    </entity>
+</doctrine-mapping>
