@@ -6,7 +6,16 @@ namespace App\Api\Ui\Transformer\Response\Auth;
 
 use JsonSerializable;
 use App\User\Application\Command\Login\LoginResponse as Login;
+use OpenApi\Attributes\Property;
+use OpenApi\Attributes\Schema;
 
+#[Schema(
+    properties: [
+        new Property(property: 'token', type: 'string'),
+        new Property(property: 'expires_in', type: 'integer'),
+    ],
+    type: 'object',
+)]
 readonly class AuthLoginResponse implements JsonSerializable
 {
     public function __construct(private Login $response) {}
