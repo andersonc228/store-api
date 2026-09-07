@@ -1,6 +1,12 @@
 doctrine:
     dbal:
         url: '%env(resolve:DATABASE_URL)%'
+        server_version: '8.0.32'
+        profiling_collect_backtrace: '%kernel.debug%'
+        default_table_options:
+          charset: utf8mb4
+          collation: utf8mb4_unicode_ci
+          collate: utf8mb4_unicode_ci
     orm:
         validate_xml_mapping: true
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware

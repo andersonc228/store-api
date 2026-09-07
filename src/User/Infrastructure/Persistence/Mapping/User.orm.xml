@@ -6,8 +6,8 @@
             name="App\User\Domain\Model\User"
             repository-class="App\User\Infrastructure\Persistence\OrmUserRepository"
     >
-        <id name="id" type="string" length="26"/>
-        <field name="email" type="string" length="255" nullable="false"/>
+        <id name="id" type="string" length="36"/>
+        <field name="email" type="string" length="180" nullable="false"/>
         <field name="password" type="string" length="255" nullable="false"/>
         <field name="createdAt" column="created_at" type="datetime_immutable" nullable="false"/>
     </entity>

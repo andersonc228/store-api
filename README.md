@@ -13,10 +13,11 @@ Antes de instalar el proyecto, asegúrate de tener instalado en tu máquina loca
 Si te acabas de descargar el proyecto por primera vez, sigue estos sencillos pasos en tu terminal para levantar todo el entorno de forma automática:
 
 ### 1. Configurar las variables de entorno
-Copia el archivo de configuración por defecto para crear tu entorno local:
+Copia el archivo de configuración genérico para crear tu entorno local personalizado:
 ```bash
-cp .env .env.local
+cp .env.dev .env
 ```
+*(Abre el nuevo archivo `.env` y edita los valores de conexión de la base de datos o claves secretas si tu entorno local de Docker utiliza credenciales diferentes).*
 
 ### 2. Ejecutar la instalación automática
 Lanza el comando maestro de automatización. Este comando detendrá contenedores previos, compilará la imagen de FrankenPHP, descargará MySQL y Redis, instalará las dependencias de Composer, limpiará la caché y cargará las fixtures:
@@ -25,10 +26,11 @@ make install
 ```
 
 ### 3. Generar las llaves criptográficas para el Login JWT
-Como las llaves SSH (`.pem`) no se suben al repositorio de Git por motivos de seguridad, debes generarlas en tu contenedor local ejecutando el siguiente comando:
+Como las llaves criptográficas (`.pem`) no se suben al repositorio de Git por motivos de seguridad, debes generarlas dentro del contenedor local ejecutando el siguiente comando:
 ```bash
-docker compose exec store_api bin/console lexik:jwt:generate-keypair
+docker compose exec store_api bin/console lexik:jwt:generate-keypair --overwrite
 ```
+*(Nota: Asegúrate de que la frase de paso `JWT_PASSPHRASE` en tu archivo `.env` coincida con la que use el comando para evitar errores de autenticación).*
 
 ¡Listo! El servidor web estará corriendo y escuchando peticiones en:
 **`http://localhost:8080`**

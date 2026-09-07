@@ -36,7 +36,7 @@ migration-create:
 	$(EXEC_COMPOSE) sh -c "bin/console doctrine:migrations:generate"
 
 db-migrate:
-	$(EXEC_COMPOSE) sh -c "bin/console doctrine:migrations:migrate --no-interaction"
+	$(EXEC_COMPOSE) sh -c "bin/console doctrine:migrations:diff"
 
 db-fresh:
 	docker compose exec -T store_database mysql -ustore_user -pstore_secret_pass -e "DROP DATABASE IF EXISTS store_db; CREATE DATABASE store_db;"
