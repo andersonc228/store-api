@@ -5,9 +5,7 @@ security:
 
   providers:
     app_user_provider:
-      entity:
-        class: App\User\Infrastructure\Security\User
-        property: email
+      lexik_jwt: ~
 
   firewalls:
     dev:
@@ -20,6 +18,8 @@ security:
       jwt: ~
 
   access_control:
+    - { path: ^/api/doc$, roles: PUBLIC_ACCESS }
+    - { path: ^/api/doc.json$, roles: PUBLIC_ACCESS }
     - { path: ^/api/login, roles: PUBLIC_ACCESS }
     - { path: ^/api/store$, roles: PUBLIC_ACCESS, methods: [ GET ] }
     - { path: ^/api, roles: ROLE_USER }

@@ -1,0 +1,18 @@
+nelmio_api_doc:
+  documentation:
+    info:
+      title: Store API
+      description: API REST para la gestión de pedidos de un ecommerce.
+      version: 1.0.0
+    components:
+      securitySchemes:
+        BearerAuth:
+          type: http
+          scheme: bearer
+          bearerFormat: JWT
+          description: "Introduce tu token JWT en el formato: Bearer <token>"
+    security:
+      - BearerAuth: []
+  areas:
+    path_patterns:
+      - ^/api

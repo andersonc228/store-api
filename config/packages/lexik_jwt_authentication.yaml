@@ -5,6 +5,7 @@ lexik_jwt_authentication:
 
   # Tiempo de vida por defecto (en segundos)
   token_ttl: 3600
+  user_id_claim: email
 
   # Configuración de los extractores automáticos
   token_extractors:

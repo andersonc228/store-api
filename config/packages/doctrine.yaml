@@ -17,6 +17,11 @@ doctrine:
             dir: '%kernel.project_dir%/src/User/Infrastructure/Persistence/Mapping'
             prefix: 'App\User\Domain\Model'
             alias: User
+          Product:
+            type: 'xml'
+            dir: '%kernel.project_dir%/src/Product/Infrastructure/Persistence/Mapping'
+            prefix: 'App\Product\Domain\Model'
+            alias: Product
         controller_resolver:
             auto_mapping: false
 
