@@ -1,0 +1,24 @@
+includes:
+    - vendor/phpat/phpat/extension.neon
+
+parameters:
+    level: 10
+    tmpDir: var/cache/phpstan
+    reportUnmatchedIgnoredErrors: false
+    paths:
+        - src/
+    excludePaths:
+        - tests/Functional/Utils/*
+    ignoreErrors:
+        - message: '#Method [\w\\]+::\w+\(\) has parameter \$\w+ with no value type specified in iterable type array#'
+          path: tests/Unit/*
+        - message: '#Method [\w\\]+::\w+\(\) return type has no value type specified in iterable type array#'
+          path: tests/Unit/*
+        - message: '#Cannot access offset .+ on mixed#'
+          path: src/Api/Ui/Http/*
+        - message: '#Cannot cast mixed to string#'
+          path: src/Api/Ui/Http/*
+
+services:
+    - class: App\Tests\Architecture\ArchitectureRules
+      tags: [phpat.test]
