@@ -10,7 +10,9 @@ use Throwable;
 readonly class ConfigExceptionLogTransformer implements ExceptionLogTransformer
 {
     /** @param array<string, string> $mapping */
-    public function __construct(private array $mapping) {}
+    public function __construct(
+        private array $mapping
+    ) {}
 
     public function match(Throwable $exception): bool
     {
@@ -25,7 +27,9 @@ readonly class ConfigExceptionLogTransformer implements ExceptionLogTransformer
     /** @return array<string, mixed> */
     public function context(Throwable $exception): array
     {
-        return ['exception' => $exception];
+        return [
+            'exception' => $exception,
+        ];
     }
 
     public function level(Throwable $exception): string

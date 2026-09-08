@@ -22,7 +22,9 @@ readonly class DefaultExceptionLogTransformer implements ExceptionLogTransformer
     /** @return array<string, mixed> */
     public function context(Throwable $exception): array
     {
-        return ['exception' => $exception];
+        return [
+            'exception' => $exception,
+        ];
     }
 
     public function level(Throwable $exception): string

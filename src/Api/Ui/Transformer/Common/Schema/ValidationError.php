@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Api\Ui\Transformer\Common\Schema;
 
 use JsonSerializable;
@@ -37,9 +39,7 @@ readonly class ValidationError implements JsonSerializable
         private string $detail,
         private string $instance,
         private ?array $parameters = [],
-    )
-    {
-    }
+    ) {}
 
     /** @return array<string, mixed> */
     public function jsonSerialize(): array

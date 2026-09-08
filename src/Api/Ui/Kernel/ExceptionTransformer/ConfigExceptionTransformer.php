@@ -10,17 +10,19 @@ use Throwable;
 
 readonly class ConfigExceptionTransformer implements ExceptionTransformer
 {
-    public function __construct(private ErrorCatalog $catalog) {}
+    public function __construct(
+        private ErrorCatalog $catalog
+    ) {}
 
     public function match(Throwable $exception): bool
     {
-        return null !== $this->catalog->forException($exception);
+        return $this->catalog->forException($exception) !== null;
     }
 
     public function transform(Throwable $exception): JsonResponse
     {
         $entry = $this->catalog->forException($exception);
-        if (null === $entry) {
+        if ($entry === null) {
             return new JsonResponse(Error::internal(), JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
 

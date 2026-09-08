@@ -13,7 +13,9 @@ use Symfony\Component\Messenger\Stamp\DispatchAfterCurrentBusStamp;
 
 readonly class MessengerEventBus implements EventBus
 {
-    public function __construct(private MessageBusInterface $bus) {}
+    public function __construct(
+        private MessageBusInterface $bus
+    ) {}
 
     public function publish(Event ...$events): void
     {

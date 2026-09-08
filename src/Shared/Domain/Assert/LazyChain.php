@@ -12,6 +12,7 @@ class LazyChain
     private ?string $property;
     private LazyAssert $lazyAssert;
     private bool $nullable;
+
     /** @var callable[] */
     private array $callables;
 
@@ -211,7 +212,7 @@ class LazyChain
         return $this;
     }
 
-    public function that(mixed $value, ?string $property = null): LazyChain
+    public function that(mixed $value, ?string $property = null): self
     {
         return $this->lazyAssert->that($value, $property);
     }

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Api\Infrastructure\Kernel;
 
+use App\Api\Ui\Kernel\ExceptionTransformer\ExceptionTransformer;
+use App\Shared\Infrastructure\Logging\ExceptionLogTransformer;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationFailureEvent;
 use Lexik\Bundle\JWTAuthenticationBundle\Events;
 use Psr\Log\LoggerInterface;
-use App\Api\Ui\Kernel\ExceptionTransformer\ExceptionTransformer;
-use App\Shared\Infrastructure\Logging\ExceptionLogTransformer;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -22,8 +22,10 @@ readonly class ExceptionSubscriber implements EventSubscriberInterface
 {
     private LoggerInterface $logger;
     private RequestStack $requestStack;
+
     /** @var iterable<ExceptionTransformer> */
     private iterable $exceptionTransformers;
+
     /** @var iterable<ExceptionLogTransformer> */
     private iterable $exceptionLogTransformers;
 

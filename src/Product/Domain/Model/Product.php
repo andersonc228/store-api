@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Product\Domain\Model;
 
 use App\Shared\Domain\Assert\Assert;
@@ -15,7 +17,7 @@ class Product
     private string $name;
     private string $price;
     private ProductStatus $status;
-    private string $description;
+    private ?string $description;
     private DateTimeImmutable $createdAt;
 
     public function __construct(
@@ -24,17 +26,21 @@ class Product
         string $name,
         string $price,
         ?ProductStatus $status,
-        string $description,
+        ?string $description,
         DateTimeImmutable $createdAt,
     ) {
-        Assert::lazy()
+        $validator = Assert::lazy()
             ->that($id, 'id')->uuid()
             ->that($reference, 'reference')->notEmpty()->maxLength(255)
             ->that($name, 'name')->notEmpty()->maxLength(255)
             ->that($price, 'price')->numeric()->gt('0')
-            ->that($description, 'description')->maxLength(255)
-            ->verifyNow();
+            ->that($description, 'description')->maxLength(255);
 
+        if ($description !== null) {
+            $validator->that($description, 'description')->notEmpty()->maxLength(255);
+        }
+
+        $validator->verifyNow();
 
         $this->id = $id;
         $this->reference = strtoupper($reference);
@@ -50,9 +56,8 @@ class Product
         string $name,
         string $price,
         string $reference,
-        string $description
+        ?string $description
     ): self {
-
         return new self(
             id: $id,
             reference: $reference,
@@ -89,7 +94,7 @@ class Product
         return $this->status;
     }
 
-    public function description(): string
+    public function description(): ?string
     {
         return $this->description;
     }
@@ -98,6 +103,4 @@ class Product
     {
         return $this->createdAt;
     }
-
-
 }

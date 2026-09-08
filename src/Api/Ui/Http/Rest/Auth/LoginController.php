@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Api\Ui\Http\Rest\Auth;
 
+use App\Api\Ui\Transformer\Common\Schema\Error;
+use App\Api\Ui\Transformer\Common\Schema\ValidationError;
+use App\Api\Ui\Transformer\Response\Auth\AuthLoginResponse as ResponseLogin;
 use App\Shared\Application\Bus\CommandBus;
 use App\User\Application\Command\Login\Login;
 use App\User\Application\Command\Login\LoginResponse;
-use App\Api\Ui\Transformer\Response\Auth\AuthLoginResponse as ResponseLogin;
 use Nelmio\ApiDocBundle\Attribute\Model;
 use OpenApi\Attributes as OA;
-use App\Api\Ui\Transformer\Common\Schema\Error;
-use App\Api\Ui\Transformer\Common\Schema\ValidationError;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +19,9 @@ use Symfony\Component\Routing\Attribute\Route;
 
 readonly class LoginController
 {
-    public function __construct(private CommandBus $commandBus) {}
+    public function __construct(
+        private CommandBus $commandBus
+    ) {}
 
     #[OA\Tag(name: 'Login')]
     #[Route('/api/login', name: 'api_login', methods: ['POST'])]

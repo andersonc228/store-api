@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Shared\Infrastructure\Symfony\Messenger;
 
-use Psr\Log\LoggerInterface;
 use App\Shared\Application\Bus\Command;
 use App\Shared\Application\Bus\Query;
 use App\Shared\Domain\Event;
+use Psr\Log\LoggerInterface;
 use ReflectionClass;
 use SensitiveParameter;
 use Symfony\Component\Messenger\Envelope;
@@ -99,7 +99,9 @@ readonly class LoggerMiddleware implements MiddlewareInterface
     /** @return mixed[] */
     private function serialize(object $object): array
     {
-        return array_merge($this->redactSensitive($object), ['class' => get_class($object)]);
+        return array_merge($this->redactSensitive($object), [
+            'class' => get_class($object),
+        ]);
     }
 
     /** @return mixed[] */

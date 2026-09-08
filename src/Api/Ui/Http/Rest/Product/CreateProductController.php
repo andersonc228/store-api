@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Api\Ui\Http\Rest\Product;
 
 use App\Api\Ui\Transformer\Common\Schema\ValidationError;
@@ -7,11 +9,11 @@ use App\Product\Application\Command\CreateProduct\CreateProduct;
 use App\Product\Domain\Model\ProductStatus;
 use App\Shared\Application\Bus\CommandBus;
 use App\Shared\Application\UuidGenerator;
+use DateTimeImmutable;
 use Nelmio\ApiDocBundle\Attribute\Model;
 use OpenApi\Attributes as OA;
-use DateTimeImmutable;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 
 readonly class CreateProductController
@@ -62,13 +64,14 @@ readonly class CreateProductController
     {
         /** @var array<string, mixed> $payload */
         $payload = $request->toArray();
+
         $command = new CreateProduct(
             id: $this->uuidGenerator->create(),
-            reference: $payload['reference'],
-            name: $payload['name'],
-            price: $payload['price'],
-            status: $payload['status'],
-            description: (string) $payload['description'],
+            reference: (string) ($payload['reference'] ?? ''),
+            name: (string) ($payload['name'] ?? ''),
+            price: (string) ($payload['price'] ?? ''),
+            status: (string) ($payload['status'] ?? ''),
+            description: isset($payload['description']) ? (string) $payload['description'] : null,
             createdAt: new DateTimeImmutable(),
         );
 

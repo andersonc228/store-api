@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Shared\Domain\Assert;
 
-use InvalidArgumentException;
 use App\Shared\Common\Functional;
+use InvalidArgumentException;
 
 class AssertException extends InvalidArgumentException
 {

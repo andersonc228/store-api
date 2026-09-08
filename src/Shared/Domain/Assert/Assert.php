@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Shared\Domain\Assert;
 
+use App\Shared\Common\Functional;
 use DateTimeImmutable;
 use DateTimeInterface;
 use InvalidArgumentException;
-use App\Shared\Common\Functional;
 use Symfony\Component\Uid\Uuid;
 
 class Assert
@@ -386,7 +386,7 @@ class Assert
         ?string $property = null,
         ?string $message = null,
     ): void {
-        if (is_null($value)) {
+        if ($value === null) {
             throw AssertException::from(
                 self::toAssertError(
                     $property,
@@ -493,7 +493,6 @@ class Assert
         }
     }
 
-
     public static function lazy(): LazyAssert
     {
         return new LazyAssert();
@@ -510,7 +509,7 @@ class Assert
     private static function valueToString(mixed $value): string
     {
         return match (true) {
-            is_null($value) => '<NULL>',
+            $value === null => '<NULL>',
             is_array($value) => '<ARRAY>',
             is_bool($value) => $value ? '<TRUE>' : '<FALSE>',
             is_scalar($value) => (string) $value,

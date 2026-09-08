@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Shared\Infrastructure\Symfony\Messenger;
 
-use Psr\Log\LoggerInterface;
 use App\Shared\Infrastructure\Logging\ExceptionLogTransformer;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Messenger\Event\WorkerMessageFailedEvent;
 use Symfony\Component\Messenger\Exception\HandlerFailedException;
@@ -13,9 +13,7 @@ use Throwable;
 
 readonly class WorkerFailedLogSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @param ExceptionLogTransformer[] $exceptionLogTransformers
-     */
+    /** @param ExceptionLogTransformer[] $exceptionLogTransformers */
     public function __construct(
         private LoggerInterface $logger,
         private array $exceptionLogTransformers,
@@ -24,7 +22,9 @@ readonly class WorkerFailedLogSubscriber implements EventSubscriberInterface
     /** @return array<string, array{string, int}> */
     public static function getSubscribedEvents(): array
     {
-        return [WorkerMessageFailedEvent::class => ['onWorkerMessageFailed', 50]];
+        return [
+            WorkerMessageFailedEvent::class => ['onWorkerMessageFailed', 50],
+        ];
     }
 
     public function onWorkerMessageFailed(WorkerMessageFailedEvent $event): void
@@ -34,7 +34,9 @@ readonly class WorkerFailedLogSubscriber implements EventSubscriberInterface
         $this->logger->log(
             $this->resolveLevel($exception),
             $exception->getMessage() ?: 'Empty exception message',
-            ['exception' => $exception],
+            [
+                'exception' => $exception,
+            ],
         );
     }
 

@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Api\Ui\Kernel\ApiDoc;
 
-use Nelmio\ApiDocBundle\Describer\DescriberInterface;
-use OpenApi\Annotations\OpenApi;
-use OpenApi\Undefined;
 use App\Api\Ui\Kernel\ExceptionTransformer\ErrorCatalog;
 use App\Api\Ui\Kernel\ExceptionTransformer\ErrorCatalogEntry;
 use App\Shared\Common\Functional;
+use Nelmio\ApiDocBundle\Describer\DescriberInterface;
+use OpenApi\Annotations\OpenApi;
+use OpenApi\Undefined;
 
 /**
  * Appends the full error catalogue (generated from ErrorCatalog) to the documentation
@@ -18,11 +18,13 @@ use App\Shared\Common\Functional;
  */
 readonly class ErrorCatalogDescriber implements DescriberInterface
 {
-    public function __construct(private ErrorCatalog $catalog) {}
+    public function __construct(
+        private ErrorCatalog $catalog
+    ) {}
 
     public function describe(OpenApi $api): void
     {
-        $existing = Undefined::UNDEFINED === $api->info->description ? '' : $api->info->description;
+        $existing = $api->info->description === Undefined::UNDEFINED ? '' : $api->info->description;
         $api->info->description = trim($existing . "\n\n" . $this->renderCatalog());
     }
 

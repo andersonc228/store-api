@@ -1,4 +1,6 @@
 {
+    "name": "anderson-coronado/store-api",
+    "description": "API for store application",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",

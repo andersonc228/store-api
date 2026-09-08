@@ -12,7 +12,6 @@ readonly class AsAsync
     public const string PRIORITY_HIGH = 'high';
     public const string PRIORITY_MEDIUM = 'medium';
     public const string PRIORITY_LOW = 'low';
-
     public const int DEFAULT_MAX_RETRIES = 2;
     public const int DEFAULT_DELAY_MS = 300_000;
     public const float DEFAULT_MULTIPLIER = 3.0;

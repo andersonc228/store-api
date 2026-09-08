@@ -6,5 +6,8 @@ namespace App\Shared\Domain\Assert;
 
 readonly class AssertError
 {
-    public function __construct(public string $property, public string $message) {}
+    public function __construct(
+        public string $property,
+        public string $message
+    ) {}
 }

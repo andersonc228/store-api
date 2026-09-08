@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Api\Ui\Kernel\ApiDoc;
 
-use App\Product\Domain\Model\ProductStatus;
 use App\Api\Ui\Transformer\Common\Schema\ErrorInstance;
 use App\Api\Ui\Transformer\Common\Schema\ErrorType;
+use App\Product\Domain\Model\ProductStatus;
 
 /**
  * Human-readable meaning of every value of the enums exposed in the API documentation.
@@ -24,7 +24,7 @@ final class EnumDescriptions
             ProductStatus::class => [
                 ProductStatus::ACTIVE->value => 'The product is currently available for purchase.',
                 ProductStatus::INACTIVE->value => 'The product is not currently available for purchase.',
-                ProductStatus::INACTIVE->value => 'The product has been discontinued and is no longer available.',
+                ProductStatus::DRAFT->value => 'The product is in a draft state and not yet available for purchase.',
             ],
             ErrorType::class => [
                 ErrorType::BAD_REQUEST->value => 'The request is malformed or invalid.',
@@ -54,13 +54,11 @@ final class EnumDescriptions
         ];
     }
 
-    /**
-     * Markdown table (value -> meaning) for the given enum, or null if it is not documented.
-     */
+    /** Markdown table (value -> meaning) for the given enum, or null if it is not documented. */
     public function table(string $enumClass): ?string
     {
         $descriptions = $this->map()[$enumClass] ?? null;
-        if (null === $descriptions) {
+        if ($descriptions === null) {
             return null;
         }
 

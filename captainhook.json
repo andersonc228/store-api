@@ -1,0 +1,22 @@
+{
+    "config": {
+        "run": {
+            "mode": "docker",
+            "exec": "docker run --rm -t -v .:/var/www/app -w /var/www/app --user $(id -u):$(id -g) store-api/php:8.5-latest"
+        }
+    },
+    "pre-commit": {
+        "enabled": true,
+        "actions": [
+            {
+                "action": "composer validate"
+            },
+            {
+                "action": "vendor/bin/ecs"
+            },
+            {
+                "action": "vendor/bin/phpstan analyse --memory-limit 512M"
+            }
+        ]
+    }
+}

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\User\Infrastructure\Security;
 
-use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUserInterface;
 use App\User\Domain\Model\User as DomainUser;
+use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUserInterface;
 
 final readonly class User implements JWTUserInterface
 {
@@ -21,7 +21,7 @@ final readonly class User implements JWTUserInterface
 
     public function getUserIdentifier(): string
     {
-        return $this->email;
+        return $this->email; // @phpstan-ignore-line
     }
 
     /** @param array{id:string,roles:string[]} $payload */
@@ -35,12 +35,11 @@ final readonly class User implements JWTUserInterface
         return new self(
             $user->getId(),
             $user->getEmail(),
-
         );
     }
 
     public function getRoles(): array
     {
-       return ['ROLE_USER'];
+        return ['ROLE_USER'];
     }
 }

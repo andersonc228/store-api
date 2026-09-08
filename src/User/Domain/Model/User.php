@@ -1,15 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\User\Domain\Model;
 
 use App\Shared\Domain\Assert\Assert;
 use App\Shared\Domain\EventsTrait;
 use DateTimeImmutable;
 
-
 class User
 {
-
     use EventsTrait;
 
     private string $id;
@@ -74,5 +74,4 @@ class User
     {
         $this->createdAt = $createdAt;
     }
-
 }

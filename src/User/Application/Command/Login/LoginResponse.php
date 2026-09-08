@@ -8,5 +8,8 @@ use App\Shared\Application\Bus\Command;
 
 readonly class LoginResponse implements Command
 {
-    public function __construct(public string $token, public int $expiresIn) {}
+    public function __construct(
+        public string $token,
+        public int $expiresIn
+    ) {}
 }

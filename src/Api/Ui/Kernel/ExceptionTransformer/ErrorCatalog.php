@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Api\Ui\Kernel\ExceptionTransformer;
 
+use App\Api\Ui\Transformer\Common\Schema\ErrorInstance as I;
+use App\Api\Ui\Transformer\Common\Schema\ErrorType as T;
 use App\Product\Domain\Exception\ProductAlreadyExistsException;
 use App\User\Domain\Exception\InvalidCredentialsException;
 use App\User\Domain\Exception\UserNotFoundException;
 use Lexik\Bundle\JWTAuthenticationBundle\Exception\ExpiredTokenException;
 use Lexik\Bundle\JWTAuthenticationBundle\Exception\InvalidTokenException;
-use App\Api\Ui\Transformer\Common\Schema\ErrorInstance as I;
-use App\Api\Ui\Transformer\Common\Schema\ErrorType as T;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;

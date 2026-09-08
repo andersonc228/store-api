@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Command;
 
 use App\Shared\Application\UuidGenerator;
 use App\User\Domain\Model\User;
+use App\User\Domain\Model\UserRepository;
 use DateTimeImmutable;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
@@ -17,26 +19,23 @@ class FixturesCommand extends Command
 {
     private const string PASSWORD = '123456789';
 
-    private $doctrine;
-
-    public function __construct(ManagerRegistry $doctrine, private UuidGenerator $uuidGenerator)
-    {
+    public function __construct(
+        private readonly UserRepository $userRepository,
+        private readonly UuidGenerator $uuidGenerator,
+    ) {
         parent::__construct();
-        $this->doctrine = $doctrine;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $em = $this->doctrine->getManager();
-
-        if ($em->getRepository(User::class)->count() === 0) {
+        if ($this->userRepository->count() === 0) {
             $u1 = new User(
                 $this->uuidGenerator->create(),
                 'demo@user.com',
                 self::PASSWORD,
                 new DateTimeImmutable(),
             );
-            $em->persist($u1);
+            $this->userRepository->save($u1);
 
             $u2 = new User(
                 $this->uuidGenerator->create(),
@@ -44,21 +43,23 @@ class FixturesCommand extends Command
                 self::PASSWORD,
                 new DateTimeImmutable(),
             );
-            $em->persist($u2);
-            $em->flush();
+            $this->userRepository->save($u2);
 
             $output->writeln('Fixtures users created');
         }
 
-        $users = new Table($output);
-        $users->setHeaders(['ID', 'Email', 'Password']);
-        array_map(
-            static fn(User $user) => $users->addRow([$user->getId(), $user->getEmail(), self::PASSWORD]),
-            $em->getRepository(User::class)->findAll(),
-        );
-        $users->render();
+        $table = new Table($output);
+        $table->setHeaders(['ID', 'Email', 'Password']);
+
+        /** @var User[] $users */
+        $users = $this->userRepository->findAll(); // @phpstan-ignore-line
+
+        foreach ($users as $user) {
+            $table->addRow([$user->getId(), $user->getEmail(), self::PASSWORD]);
+        }
+
+        $table->render();
 
         return Command::SUCCESS;
     }
 }
-
