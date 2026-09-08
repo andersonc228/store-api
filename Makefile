@@ -45,3 +45,12 @@ db-fresh:
 
 cache-clear:
 	$(EXEC_COMPOSE) sh -c "bin/console cache:clear"
+
+ecs:
+	$(EXEC_COMPOSE) sh -c "vendor/bin/ecs check"
+
+ecs-fix:
+	$(EXEC_COMPOSE) sh -c "vendor/bin/ecs check --fix"
+
+phpstan:
+	$(EXEC_COMPOSE) sh -c "vendor/bin/phpstan analyse --memory-limit=512M"
