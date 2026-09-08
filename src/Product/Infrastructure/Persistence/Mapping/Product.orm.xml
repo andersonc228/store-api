@@ -7,7 +7,7 @@
             repository-class="App\Product\Infrastructure\Persistence\OrmProductRepository"
     >
         <id name="id" type="string" length="36"/>
-        <field name="reference" type="string" length="255" nullable="false"/>
+        <field name="reference" type="string" length="255" nullable="false" unique="true"/>
         <field name="name" type="string" length="255" nullable="false"/>
         <field name="price" type="decimal" precision="10" scale="2" nullable="false"/>
         <field name="status" enum-type="App\Product\Domain\Model\ProductStatus" nullable="false"/>
