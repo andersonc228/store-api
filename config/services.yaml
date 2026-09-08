@@ -25,6 +25,15 @@ services:
     arguments:
       $exceptionLogTransformers: !tagged_iterator App\Shared\Infrastructure\Logging\ExceptionLogTransformer
 
+  App\Api\Infrastructure\Kernel\ExceptionSubscriber:
+    arguments:
+      $exceptionTransformers: !tagged_iterator App\Api\Ui\Kernel\ExceptionTransformer\ExceptionTransformer
+      $exceptionLogTransformers: !tagged_iterator App\Shared\Infrastructure\Logging\ExceptionLogTransformer
+
+  App\Api\Infrastructure\Kernel\ExceptionLogTransformer\ConfigExceptionLogTransformer:
+    arguments:
+      $mapping: []
+
   _instanceof:
     App\Shared\Application\Bus\CommandHandler:
       tags:
@@ -35,3 +44,9 @@ services:
     App\Shared\Application\Bus\EventHandler:
       tags:
         - { name: 'messenger.message_handler', bus: 'event.bus' }
+    App\Api\Ui\Kernel\ExceptionTransformer\ExceptionTransformer:
+      tags:
+        - { name: 'App\Api\Ui\Kernel\ExceptionTransformer\ExceptionTransformer' }
+    App\Shared\Infrastructure\Logging\ExceptionLogTransformer:
+      tags:
+        - { name: 'App\Shared\Infrastructure\Logging\ExceptionLogTransformer' }
