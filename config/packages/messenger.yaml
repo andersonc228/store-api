@@ -6,18 +6,21 @@ framework:
       command.bus:
         default_middleware: true
         middleware:
+          - App\Shared\Infrastructure\Symfony\Messenger\CustomExceptionMiddleware
           - doctrine_ping_connection
           - doctrine_close_connection
-          - doctrine_transaction
       query.bus:
         default_middleware: true
         middleware:
+          - App\Shared\Infrastructure\Symfony\Messenger\CustomExceptionMiddleware
           - doctrine_ping_connection
           - doctrine_close_connection
       event.bus:
         default_middleware:
           enabled: true
           allow_no_handlers: true
+        middleware:
+          - App\Shared\Infrastructure\Symfony\Messenger\CustomExceptionMiddleware
 
     transports:
       async:

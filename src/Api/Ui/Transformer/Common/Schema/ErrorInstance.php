@@ -14,4 +14,5 @@ enum ErrorInstance: string
     case AUTHENTICATION = 'authentication';
     case USER = 'user';
     case INTERNAL = 'internal';
+    case PRODUCT = 'product';
 }
